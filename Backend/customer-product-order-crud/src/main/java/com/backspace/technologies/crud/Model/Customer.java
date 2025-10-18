@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
+@Table(name = "customer")
 public class Customer {
 
     @Id

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "customer_order")
 public class CustomerOrder {
     @Id
     @Column(name = "customer_order_id")
