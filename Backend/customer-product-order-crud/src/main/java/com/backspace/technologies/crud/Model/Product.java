@@ -28,13 +28,6 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long productId, String productName, String productDesc, BigDecimal productPrice) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productDesc = productDesc;
-        this.productPrice = productPrice;
-    }
-
     public Long getProductId() {
         return productId;
     }

@@ -32,15 +32,6 @@ public class CustomerOrder {
     public CustomerOrder() {
     }
 
-    public CustomerOrder(Long customerOrderId, Customer customer, String orderReferenceNumber, Integer customerOrderQuantity, Product product, LocalDateTime createdAt) {
-        this.customerOrderId = customerOrderId;
-        this.customer = customer;
-        this.orderReferenceNumber = orderReferenceNumber;
-        this.customerOrderQuantity = customerOrderQuantity;
-        this.product = product;
-        this.createdAt = createdAt;
-    }
-
     public Long getCustomerOrderId() {
         return customerOrderId;
     }

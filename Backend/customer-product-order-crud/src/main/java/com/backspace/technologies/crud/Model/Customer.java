@@ -35,13 +35,6 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long customerId, String customerName, String customerSurname, String customerPhoneNumber, String customerEmail) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.customerSurname = customerSurname;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.customerEmail = customerEmail;
-    }
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
