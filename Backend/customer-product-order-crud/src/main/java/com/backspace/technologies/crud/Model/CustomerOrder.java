@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "customer_order")
+@Table(name = "customer_orders")
 public class CustomerOrder {
     @Id
     @Column(name = "customer_order_id")
     private Long customerOrderId;
 
     @NotBlank
-    @Column(name = "customer_order_ref")
+    @Column(unique = true,  name = "customer_order_ref")
     private String orderReferenceNumber;
 
     @ManyToOne(optional = false)

@@ -31,6 +31,10 @@ public class CustomerController {
             System.out.println("An error occured while adding the customer: " + e.getMessage());
             return null;
         }
+    }
 
+    @PutMapping("/customer/{customerId}")
+    public Customer updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody Customer customer) {
+        return customerService.updateCustomer(customerId, customer);
     }
 }
