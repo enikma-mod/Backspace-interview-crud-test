@@ -14,12 +14,10 @@ public class CustomerOrder {
     @Column(name = "customer_order_ref")
     private String orderReferenceNumber;
 
-//  Each Order belongs to one customer
     @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-//    One product can appear in many orders
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id")
     private Product product;
