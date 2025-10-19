@@ -1,6 +1,8 @@
 package com.backspace.technologies.crud.Controller;
 
 import com.backspace.technologies.crud.Model.Customer;
+import com.backspace.technologies.crud.Model.CustomerOrder;
+import com.backspace.technologies.crud.Service.CustomerOrderService;
 import com.backspace.technologies.crud.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,33 +10,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/customer")
+@CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:8081")
 public class CustomerController {
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
-    @GetMapping("/customer")
-    public List<Customer> retrieveAllCustomers(){
-        return customerService.listAllCustomers();
+    @Autowired
+    private CustomerOrderService orderService;
+
+    @GetMapping
+    public List<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 
-    @PostMapping("/customer")
-    public Customer addCustomer(@RequestBody Customer customer) {
-        try {
-            return customerService.addCustomer(customer);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid customer data: " + e.getMessage());
-            return null;
-        } catch (Exception e) {
-            System.out.println("An error occured while adding the customer: " + e.getMessage());
-            return null;
-        }
+    @GetMapping("/{customerId}")
+    public Customer getCustomer(@PathVariable Long customerId){
+        return customerService.getCustomerById(customerId);
     }
 
-    @PutMapping("/customer/{customerId}")
+    @PostMapping
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.addCustomer(customer);
+    }
+
+    @PutMapping("/{customerId}")
     public Customer updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody Customer customer) {
         return customerService.updateCustomer(customerId, customer);
     }
+
+    @DeleteMapping("/{customerId}")
+    public String deleteCustomer(@PathVariable Long customerId) {
+        customerService.deleteCustomer(customerId);
+        return("Customer deleted successfully");
+    }
+
 }

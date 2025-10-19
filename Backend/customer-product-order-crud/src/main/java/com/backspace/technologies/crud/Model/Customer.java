@@ -1,32 +1,32 @@
 package com.backspace.technologies.crud.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "customer_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
-    @Column(name = "customer_name")
-    @NotBlank (message = "Customer Name is required")
     private String customerName;
-
-    @Column(name = "customer_surname")
-    @NotBlank (message = "Customer Surname is required")
     private String customerSurname;
-
-    @Column(name = "customer_phone_nbr")
     private String customerPhoneNumber;
-
-    @Column(name = "customer_email")
-    @Email(message = "Invalid email format")
     private String customerEmail;
+
+    //A customer can have multiple orders
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("customer")
+    private List<CustomerOrder> orders;
+
 
     public Long getCustomerId() {
         return customerId;
@@ -34,7 +34,6 @@ public class Customer {
 
     public Customer() {
     }
-
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
@@ -72,5 +71,11 @@ public class Customer {
         this.customerEmail = customerEmail;
     }
 
+    public List<CustomerOrder> getOrders() {
+        return orders;
+    }
 
+    public void setOrders(List<CustomerOrder> orders) {
+        this.orders = orders;
+    }
 }
