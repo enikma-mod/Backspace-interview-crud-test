@@ -1,43 +1,39 @@
 package com.backspace.technologies.crud.Model;
-import jakarta.validation.constraints.*;
+import com.backspace.technologies.crud.utils.OrderNumberGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
+@Table(name = "customer_orders")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CustomerOrder {
+
     @Id
-    @Column(name = "customer_order_id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long customerOrderId;
 
-    @NotBlank
-    @Column(name = "customer_order_ref")
     private String orderReferenceNumber;
+    private int customerOrderQuantity;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "customer_id")
+    //Each order is linked to one customer
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", nullable = false)
+    @JsonIgnoreProperties("orders")
     private Customer customer;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id")
+    //Each order is linked to one product.
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @NotNull(message = "Quantity is required")
-    @Min(value = 1, message = "Quantity must be at least 1")
-    private Integer customerOrderQuantity;
 
-    private LocalDateTime createdAt;
-
-    public CustomerOrder() {
+    public void generateReferenceNumber() {
+        if (this.orderReferenceNumber == null || this.orderReferenceNumber.isEmpty()) {
+            this.orderReferenceNumber = OrderNumberGenerator.generateOrderReference();
+        }
     }
 
-    public CustomerOrder(Long customerOrderId, Customer customer, String orderReferenceNumber, Integer customerOrderQuantity, Product product, LocalDateTime createdAt) {
-        this.customerOrderId = customerOrderId;
-        this.customer = customer;
-        this.orderReferenceNumber = orderReferenceNumber;
-        this.customerOrderQuantity = customerOrderQuantity;
-        this.product = product;
-        this.createdAt = createdAt;
+    public CustomerOrder() {
     }
 
     public Long getCustomerOrderId() {
@@ -72,21 +68,14 @@ public class CustomerOrder {
         this.product = product;
     }
 
-    public Integer getCustomerOrderQuantity() {
+    public int getCustomerOrderQuantity() {
         return customerOrderQuantity;
     }
 
-    public void setCustomerOrderQuantity(Integer customerOrderQuantity) {
+    public void setCustomerOrderQuantity(int customerOrderQuantity) {
         this.customerOrderQuantity = customerOrderQuantity;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }
 
 

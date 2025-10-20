@@ -6,33 +6,18 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "products")
 public class Product {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
     private Long productId;
 
-    @Column(name = "product_name")
-    @NotBlank(message = "Product name is required")
     private String productName;
-
-    @Column(name = "product_desc")
     private String productDesc;
+    private double productPrice;
 
-    @Column(name = "product_price")
-    @NotNull(message = "Price is required")
-    private BigDecimal productPrice;
-
-    public Product() {
-    }
-
-    public Product(Long productId, String productName, String productDesc, BigDecimal productPrice) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productDesc = productDesc;
-        this.productPrice = productPrice;
-    }
+    public Product() {}
 
     public Long getProductId() {
         return productId;
@@ -58,11 +43,11 @@ public class Product {
         this.productDesc = productDesc;
     }
 
-    public BigDecimal getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(BigDecimal productPrice) {
+    public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
 }
