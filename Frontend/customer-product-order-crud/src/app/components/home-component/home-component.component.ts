@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-// import { DropdownModule } from 'primeng/dropdown';
 import { Customer } from '../../models/customer.model';
 
 
