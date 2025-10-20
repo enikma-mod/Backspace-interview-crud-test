@@ -27,13 +27,13 @@ public class Customer {
     @JsonIgnoreProperties("customer")
     private List<CustomerOrder> orders;
 
+    public Customer() {
+    }
 
     public Long getCustomerId() {
         return customerId;
     }
 
-    public Customer() {
-    }
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;

@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/customer")
-@CrossOrigin(origins = "*")
-//@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
 
     @Autowired
@@ -21,7 +20,7 @@ public class CustomerController {
     @Autowired
     private CustomerOrderService orderService;
 
-    @GetMapping
+    @GetMapping("/getAllCustomers")
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
@@ -31,17 +30,17 @@ public class CustomerController {
         return customerService.getCustomerById(customerId);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.addCustomer(customer);
     }
 
-    @PutMapping("/{customerId}")
+    @PutMapping("update/{customerId}")
     public Customer updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody Customer customer) {
         return customerService.updateCustomer(customerId, customer);
     }
 
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping("delete/{customerId}")
     public String deleteCustomer(@PathVariable Long customerId) {
         customerService.deleteCustomer(customerId);
         return("Customer deleted successfully");

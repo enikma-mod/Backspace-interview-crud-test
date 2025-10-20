@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 public class CustomerOrder {
 
     @Id
-    @Column(name = "customer_order_id")
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long customerOrderId;
 

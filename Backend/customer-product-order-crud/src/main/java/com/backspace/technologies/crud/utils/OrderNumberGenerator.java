@@ -9,6 +9,7 @@ public class OrderNumberGenerator {
 
     public static String generateOrderReference() {
         String datePart = LocalDate.now().toString().replace("-", "");
+        //To be changed - Make it sequential
         int randomPart = new Random().nextInt(90000) + 1000;
         return datePart + "-" + randomPart;
     }
