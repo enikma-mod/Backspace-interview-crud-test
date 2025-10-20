@@ -20,7 +20,7 @@ public class CustomerController {
     @Autowired
     private CustomerOrderService orderService;
 
-    @GetMapping("/getAllCustomers")
+    @GetMapping
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
@@ -30,17 +30,22 @@ public class CustomerController {
         return customerService.getCustomerById(customerId);
     }
 
-    @PostMapping("/add")
+    @GetMapping("/role/{isAdmin}")
+    public List<Customer> getCustomersByRole(@PathVariable boolean isAdmin) {
+        return customerService.getCustomersByRole(isAdmin);
+    }
+
+    @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.addCustomer(customer);
     }
 
-    @PutMapping("update/{customerId}")
+    @PutMapping("/{customerId}")
     public Customer updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody Customer customer) {
         return customerService.updateCustomer(customerId, customer);
     }
 
-    @DeleteMapping("delete/{customerId}")
+    @DeleteMapping("/{customerId}")
     public String deleteCustomer(@PathVariable Long customerId) {
         customerService.deleteCustomer(customerId);
         return("Customer deleted successfully");

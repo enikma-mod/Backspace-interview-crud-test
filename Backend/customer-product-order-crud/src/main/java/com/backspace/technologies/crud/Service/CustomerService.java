@@ -22,20 +22,25 @@ public class CustomerService {
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 
+    public List<Customer> getCustomersByRole(boolean isAdmin) {
+        return customerRepository.findByIsAdmin(isAdmin);
+    }
+
     public Customer addCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    public Customer updateCustomer(Long customerId, Customer updated) {
-        Customer existing = getCustomerById(customerId);
-        if (existing != null) {
-            existing.setCustomerName(updated.getCustomerName());
-            existing.setCustomerSurname(updated.getCustomerSurname());
-            existing.setCustomerPhoneNumber(updated.getCustomerPhoneNumber());
-            existing.setCustomerEmail(updated.getCustomerEmail());
-            return customerRepository.save(existing);
-        }
-        return null;
+    public Customer updateCustomer(Long id, Customer updatedCustomer) {
+        return customerRepository.findById(id)
+                .map(existingCustomer -> {
+                    existingCustomer.setCustomerName(updatedCustomer.getCustomerName());
+                    existingCustomer.setCustomerSurname(updatedCustomer.getCustomerSurname());
+                    existingCustomer.setCustomerEmail(updatedCustomer.getCustomerEmail());
+                    existingCustomer.setCustomerPhoneNumber(updatedCustomer.getCustomerPhoneNumber());
+                    existingCustomer.setAdmin(updatedCustomer.isAdmin());
+                    return customerRepository.save(existingCustomer);
+                })
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 
     public void deleteCustomer(Long customerId) {
