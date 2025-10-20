@@ -7,4 +7,5 @@ export interface Customer {
     customerPhoneNumber: string;
     customerEmail: string
     orders?: CustomerOrder[];
+    isAdmin?: boolean
 }

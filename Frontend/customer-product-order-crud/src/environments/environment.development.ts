@@ -5,7 +5,7 @@ export const environment = {
 
     apiEndpoints: {
         // Customer Endpoints
-        customers_get_all : '/customers/getAllCustomers',
+        customers_get_all : '/customers',
         customers_get_one: '/customers/',  
         customers_add: '/customers/add',
         customers_update: '/customers/update',
