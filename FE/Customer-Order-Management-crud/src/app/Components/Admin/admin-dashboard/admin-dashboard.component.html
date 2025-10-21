@@ -8,7 +8,7 @@
     {{ editingCustomer ? 'Cancel Edit' : (showCustomerForm ? 'Cancel' : 'Add Customer') }}
   </button>
 
-  <!---------------- Add/Edit Customer Form ---------------------------------->
+  <!-------------------------------- Add/Edit Customer Form ---------------------------------->
   <div *ngIf="showCustomerForm" class="mt-4 p-4 border rounded-lg bg-gray-50">
     <h3 class="text-lg font-semibold mb-2">{{ editingCustomer ? 'Edit Customer' : 'Add Customer' }}</h3>
     <form (ngSubmit)="saveCustomer()">
@@ -93,8 +93,6 @@
 </div>
 
 
-
-  <!-- ------------------------------- Products Section ------------------------------ -->
 <div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
   <h2 class="text-xl font-bold mb-4">Products</h2>
 
@@ -102,36 +100,22 @@
     {{ editingProduct ? 'Cancel Edit' : (showProductForm ? 'Cancel' : 'Add Product') }}
   </button>
 
-  <!-- ===== Add/Edit Product Form ===== -->
   <div *ngIf="showProductForm" class="mt-4 p-4 border rounded-lg bg-gray-50">
     <h3 class="text-lg font-semibold mb-2">{{ editingProduct ? 'Edit Product' : 'Add Product' }}</h3>
     <form (ngSubmit)="saveProduct()">
-      <input
-        type="text"
-        placeholder="Product Name"
-        [(ngModel)]="productForm.productName"
-        name="productName"
-        required
+
+      <input type="text" placeholder="Product Name" [(ngModel)]="productForm.productName" name="productName" required
         class="p-2 border rounded w-full mb-2"
       />
-      <input
-        type="text"
-        placeholder="Description"
-        [(ngModel)]="productForm.productDesc"
-        name="productDesc"
-        required
+
+      <input type="text" placeholder="Description" [(ngModel)]="productForm.productDesc" name="productDesc" required
         class="p-2 border rounded w-full mb-2"
       />
     
-    <input
-        type="text"
-        inputmode="decimal"
-        placeholder="0.00"
-        [(ngModel)]="productForm.productPrice"
-        name="productPrice"
+    <input type="text" inputmode="decimal" placeholder="0.00" [(ngModel)]="productForm.productPrice" name="productPrice"
         required
         pattern="[0-9]*[.]?[0-9]*"
-        class="p-2 flex-1 outline-none"
+        class="p-2 border rounded w-full mb-2"
     />
 
       <button type="submit" class="bg-sky-800 text-white p-2 rounded hover:bg-sky-700">
@@ -141,7 +125,6 @@
   </div>
 
 
-  <!-- ===== Product Table ===== -->
   <table class="min-w-full border mt-4">
     <thead class="bg-gray-200">
       <tr>
@@ -170,59 +153,86 @@
 </div>
 
 
-  <!-- <div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
-    <h2 class="text-xl font-bold mb-4">Products</h2>
-    <button (click)="addProduct()" class="bg-sky-800 text-white p-2 rounded mb-4 hover:bg-sky-700">Add Product</button>
-    <table class="min-w-full border">
-      <thead class="bg-gray-200">
-        <tr>
-          <th class="py-2 px-4">Name</th>
-          <th class="py-2 px-4">Description</th>
-          <th class="py-2 px-4">Price</th>
-          <th class="py-2 px-4">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of products">
-          <td class="py-2 px-4">{{ product.productName }}</td>
-          <td class="py-2 px-4">{{ product.productDesc }}</td>
-          <td class="py-2 px-4">{{ product.productPrice }}</td>
-          <td class="py-2 px-4 space-x-2">
-            <button (click)="editProduct(product)" class="bg-yellow-400 p-1 rounded hover:bg-yellow-500">Edit</button>
-            <button (click)="deleteProduct(product.productId!)" class="bg-red-600 text-white p-1 rounded hover:bg-red-700">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div> -->
+<div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
+  <h2 class="text-xl font-bold mb-4">Orders</h2>
 
-  <!-- ===== Orders Section ===== -->
-  <div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
-    <h2 class="text-xl font-bold mb-4">Orders</h2>
-    <button class="bg-sky-800 text-white p-2 rounded mb-4 hover:bg-sky-700">Add Order</button>
-    <table class="min-w-full border">
-      <thead class="bg-gray-200">
-        <tr>
-          <th class="py-2 px-4">Order Ref</th>
-          <th class="py-2 px-4">Customer</th>
-          <th class="py-2 px-4">Product</th>
-          <th class="py-2 px-4">Quantity</th>
-          <th class="py-2 px-4">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders">
-          <td class="py-2 px-4">{{ order.orderReferenceNumber }}</td>
-          <td class="py-2 px-4">{{ order.customer?.customerName }}</td>
-          <td class="py-2 px-4">{{ order.product?.productName }}</td>
-          <!-- <td class="py-2 px-4">{{ order.product }}</td> -->
-          <td class="py-2 px-4 space-x-2">
-            <!-- <button (click)="editOrder(order)" class="bg-yellow-400 p-1 rounded hover:bg-yellow-500">Edit</button> -->
-            <!-- <button (click)="deleteOrder(order!.customerOrderId)" class="bg-red-600 text-white p-1 rounded hover:bg-red-700">Delete</button> -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <button (click)="toggleOrderForm()" class="bg-sky-800 text-white p-2 rounded mb-4 hover:bg-sky-700">
+    {{ editingOrder ? 'Cancel Edit' : (showOrderForm ? 'Cancel' : 'Add Order') }}
+  </button>
+
+  <div *ngIf="showOrderForm" class="mt-4 p-4 border rounded-lg bg-gray-50">
+    <h3 class="text-lg font-semibold mb-2">{{ editingOrder ? 'Edit Order' : 'Add Order' }}</h3>
+    <form (ngSubmit)="saveOrder()">
+
+      <select
+        [(ngModel)]="orderForm.customerId"
+        name="customerId"
+        required
+        class="p-2 border rounded w-full mb-2"
+      >
+        <option value="" disabled selected>Select Customer</option>
+        <option *ngFor="let customer of customers" [value]="customer.customerId">
+          {{ customer.customerName }} {{ customer.customerSurname }}
+        </option>
+      </select>
+
+      <!-- Product Select -->
+      <select
+        [(ngModel)]="orderForm.productId"
+        name="productId"
+        required
+        class="p-2 border rounded w-full mb-2"
+      >
+        <option value="" disabled selected>Select Product</option>
+        <option *ngFor="let product of products" [value]="product.productId">
+          {{ product.productName }}
+        </option>
+      </select>
+
+      <!-- Quantity -->
+      <input
+        type="number"
+        placeholder="Quantity"
+        [(ngModel)]="orderForm.quantity"
+        name="quantity"
+        required
+        min="1"
+        class="p-2 border rounded w-full mb-2"
+      />
+
+      <button type="submit" class="bg-sky-800 text-white p-2 rounded hover:bg-sky-700">
+        {{ editingOrder ? 'Update' : 'Save' }}
+      </button>
+    </form>
   </div>
 
+  <!-- ===== Orders Table ===== -->
+  <table class="min-w-full border mt-4">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4">Order Ref</th>
+        <th class="py-2 px-4">Customer</th>
+        <th class="py-2 px-4">Product</th>
+        <th class="py-2 px-4">Quantity</th>
+        <th class="py-2 px-4">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td class="py-2 px-4">{{ order.orderReferenceNumber }}</td>
+        <td class="py-2 px-4">{{ order.customer?.customerName }} {{ order.customer?.customerSurname }}</td>
+        <td class="py-2 px-4">{{ order.product?.productName }}</td>
+        <td class="py-2 px-4">{{ order.quantity }}</td>
+        <td class="py-2 px-4 space-x-2">
+          <button (click)="editOrder(order)" class="bg-yellow-400 p-1 rounded hover:bg-yellow-500">
+            Edit
+          </button>
+          <button (click)="deleteOrder(order.id!)" class="bg-red-600 text-white p-1 rounded hover:bg-red-700">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
