@@ -9,6 +9,7 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
+// *ngIf="showNavbar" 
 export class NavbarComponent {
 
   constructor(private router: Router) {}
@@ -17,8 +18,8 @@ export class NavbarComponent {
     // Clear session storage / tokens if any
     localStorage.clear();
     
-    // Navigate to login page
-    this.router.navigate(['/login']);
+
+    this.router.navigate(['/register']);
   }
 
 }

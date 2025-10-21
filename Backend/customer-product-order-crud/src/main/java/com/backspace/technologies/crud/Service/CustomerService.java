@@ -3,15 +3,19 @@ package com.backspace.technologies.crud.Service;
 import com.backspace.technologies.crud.Model.Customer;
 import com.backspace.technologies.crud.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
@@ -20,6 +24,25 @@ public class CustomerService {
     public Customer getCustomerById(Long customerId) {
         return customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
+    }
+
+    public Customer registerCustomer(Customer customer) {
+        Optional<Customer> existing = customerRepository.findByCustomerEmail(customer.getCustomerEmail());
+        if (existing.isPresent()) {
+            throw new RuntimeException("Email already registered");
+        }
+
+        customer.setCustomerPassword(passwordEncoder.encode(customer.getCustomerPassword()));
+        return customerRepository.save(customer);
+    }
+
+    public Customer login(String email, String password) {
+        Optional<Customer> user = customerRepository.findByCustomerEmail(email);
+        if (user.isPresent() && passwordEncoder.matches(password, user.get().getCustomerPassword())) {
+            return user.get();
+        } else {
+            throw new RuntimeException("Invalid credentials");
+        }
     }
 
     public List<Customer> getCustomersByRole(boolean isAdmin) {

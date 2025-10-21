@@ -46,6 +46,8 @@ export class AdminDashboardComponent {
 
   orderForm: CustomerOrder = {
     orderReferenceNumber: '',
+    customer: this.customerForm,
+    product: this.productForm,
     customerOrderQuantity: 0
   };
 
@@ -140,8 +142,6 @@ export class AdminDashboardComponent {
     }
   }
 
-  //----------------------------- PRODUCT METHODS ----------------------------------
-
 
   toggleProductForm(): void {
     this.showProductForm = !this.showProductForm;
@@ -205,8 +205,8 @@ export class AdminDashboardComponent {
   }
 
   saveOrder(): void {
-    if (this.editingOrder && this.orderForm.customerOrderId) {
-      this.orderService.updateOrder(this.orderForm.customerOrderId, this.orderForm).subscribe({
+    if (this.editingOrder && this.orderForm?.customerOrderId!) {
+      this.orderService.updateOrder(this.orderForm?.customerOrderId, this.orderForm).subscribe({
         next: () => {
           this.loadOrders()
           this.toggleOrderForm();
@@ -231,6 +231,12 @@ export class AdminDashboardComponent {
     };
     this.editingOrder = false;
     this.showOrderForm = false;
+  }
+
+    editOrder(order: CustomerOrder): void {
+    this.showOrderForm = true;
+    this.editingOrder = true;
+    this.orderForm = { ...order };
   }
 
   

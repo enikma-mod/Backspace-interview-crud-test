@@ -15,18 +15,19 @@ public class CustomerProductOrderManagementSystemApplication {
 	}
 
 	//Default Admin added
-	@Bean
-	public CommandLineRunner initAdmin(CustomerRepository customerRepository) {
-		return args -> {
-			if (customerRepository.count() == 0) {
-				Customer admin = new Customer();
-				admin.setCustomerName("Admin");
-				admin.setAdmin(true);
-				admin.setCustomerEmail("admin@system.com");
-				customerRepository.save(admin);
-				System.out.println("Default admin user created");
-			}
-		};
-	}
+//	@Bean
+//	public CommandLineRunner initAdmin(CustomerRepository customerRepository) {
+//		return args -> {
+//			if (customerRepository.count() == 0) {
+//				Customer admin = new Customer();
+//				admin.setCustomerName("Admin");
+//				admin.setCustomerPassword("admin@12345");
+//				admin.setAdmin(true);
+//				admin.setCustomerEmail("admin@system.com");
+//				customerRepository.save(admin);
+//				System.out.println("Default admin user created");
+//			}
+//		};
+//	}
 
 }

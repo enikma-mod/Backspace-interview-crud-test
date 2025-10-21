@@ -21,12 +21,13 @@ export class CustomerService {
   getCustomerById(customerId: number): Observable<Customer> {
     return this.http.get<Customer>(`${this.baseURL}${this.endpoints.customers_get_one}${customerId}`);
   }
-
   
 
   addCustomer(customer: Customer): Observable<Customer> {
-    return this.http.post<Customer>(`${this.baseURL}${this.endpoints.customers_add}`, customer);
+    return this.http.post<Customer>(`${this.baseURL}${this.endpoints.customers_register}`, customer);
   }
+
+  
 
   updateCustomer(customerId: number, customer: Customer): Observable<Customer> {
     return this.http.put<Customer>(`${this.baseURL}${this.endpoints.customers_update}${customerId}`, customer);
@@ -34,6 +35,14 @@ export class CustomerService {
 
   deleteCustomer(customerId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseURL}${this.endpoints.customers_delete}${customerId}`);
+  }
+
+  login(email: string, password: string): Observable<Customer> {
+    return this.http.post<Customer>(`${this.baseURL}${this.endpoints.customers_login}`, { email, password });
+  }
+
+  register(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(`${this.baseURL}${this.endpoints.customers_register}`, customer);
   }
 
 

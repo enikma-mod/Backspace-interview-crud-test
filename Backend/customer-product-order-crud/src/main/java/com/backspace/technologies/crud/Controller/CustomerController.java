@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -23,6 +24,18 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
+    }
+
+    @PostMapping("/register")
+    public Customer registerCustomer(@RequestBody Customer customer) {
+        return customerService.registerCustomer(customer);
+    }
+
+    @PostMapping("/login")
+    public Customer login(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+        return customerService.login(email, password);
     }
 
     @GetMapping("/{customerId}")

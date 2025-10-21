@@ -7,6 +7,7 @@ import com.backspace.technologies.crud.Repository.CustomerOrderRepository;
 import com.backspace.technologies.crud.Repository.CustomerRepository;
 import com.backspace.technologies.crud.Repository.ProductRepository;
 import com.backspace.technologies.crud.Service.CustomerOrderService;
+import com.backspace.technologies.crud.dto.OrderRequest;
 import com.backspace.technologies.crud.utils.OrderNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,14 @@ public class CustomerOrderController {
     }
 
     @PostMapping
-    public CustomerOrder createOrder(@RequestBody Map<String, Object> orderRequest) {
-        Long customerId = ((Number) orderRequest.get("customerId")).longValue();
-        Long productId = ((Number) orderRequest.get("productId")).longValue();
-        int quantity = (int) orderRequest.get("customerOrderQuantity");
-        return orderService.createOrder(customerId, productId, quantity);
+    public CustomerOrder createOrder(@RequestBody OrderRequest orderRequest) {
+        return orderService.createOrder(
+                orderRequest.getCustomerId(),
+                orderRequest.getProductId(),
+                orderRequest.getCustomerOrderQuantity()
+        );
     }
+
 
     @PutMapping("/{customerOrderId}")
     public CustomerOrder updateOrder(@PathVariable Long id, @RequestBody Map<String, Object> request) {

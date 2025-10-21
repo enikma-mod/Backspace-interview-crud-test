@@ -6,21 +6,23 @@ export const environment = {
     apiEndpoints: {
         // Customer Endpoints
         customers_get_all : '/customers',
-        customers_get_one: '/customers/',  
-        customers_add: '/customers/add',
-        customers_update: '/customers/update',
-        customers_delete: '/customers/delete/',
+        customers_register: '/customers/register',
+        customers_login: '/customers/login',
+        customers_get_one: '/customers/',
+        customers_add: '/customers',
+        customers_update: '/customers/',
+        customers_delete: '/customers/',
 
         // Order Endpoints
         orders_get_by_customer: '/orders/customer/',
-        orders_add: '/orders/add',
+        orders_add: '/orders',
         orders_update: '/orders/update/',
         orders_delete: '/orders/delete/',
 
         // Product Endpoints
         products_get_all: '/products',
-        products_add: '/products/add',
-        products_update: '/products/update/',
+        products_add: '/products',
+        products_update: '/products/',
         products_delete: '/products/delete/'
 
     }

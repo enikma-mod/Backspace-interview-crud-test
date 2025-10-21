@@ -27,6 +27,7 @@ public class Customer {
     @JsonIgnoreProperties("customer")
     private List<CustomerOrder> orders;
 
+    private String customerPassword;
     private boolean isAdmin;
 
     public Customer() {
@@ -79,6 +80,14 @@ public class Customer {
 
     public void setOrders(List<CustomerOrder> orders) {
         this.orders = orders;
+    }
+
+    public String getCustomerPassword() {
+        return customerPassword;
+    }
+
+    public void setCustomerPassword(String customerPassword) {
+        this.customerPassword = customerPassword;
     }
 
     public boolean isAdmin() {

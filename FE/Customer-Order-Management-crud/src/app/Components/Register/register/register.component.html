@@ -1,3 +1,9 @@
+<app-toast *ngIf="toast.visible"
+            [message]="toast.message"
+            [type]="toast.type"
+            [duration]="toast.duration">
+</app-toast>
+
 <div class="flex justify-center items-center min-h-screen bg-sky-900">
   <div class="bg-white p-8 rounded-2xl shadow-xl w-96 sm:w-[450px]">
     <h2 class="text-2xl font-extrabold mb-6 text-sky-900 text-center">Register</h2>

@@ -1,23 +1,50 @@
-<nav class="bg-sky-800 text-white p-4 flex justify-between items-center shadow-md">
-  <div class="text-lg font-bold">Backspace Technologies</div>
+<nav class="bg-gradient-to-r from-sky-900 via-sky-800 to-sky-700 text-white shadow-lg">
+  <div class="flex justify-between items-center max-w-7xl mx-auto">
+    <!-- Logo / Brand -->
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 bg-white text-sky-900 font-extrabold rounded-lg flex items-center justify-center">B</div>
+      <span class="font-bold text-lg tracking-wide">Backspace Technologies</span>
+    </div>
 
-  <ul class="flex space-x-4">
-    <li>
-      <a routerLink="/customers" class="hover:text-gray-300">Customers</a>
-    </li>
-    <li>
-      <a routerLink="/products" class="hover:text-gray-300">Products</a>
-    </li>
-    <li>
-      <a routerLink="/orders" class="hover:text-gray-300">Orders</a>
-    </li>
-  </ul>
+    <!-- Navigation Links -->
+    <ul class="hidden md:flex space-x-6 text-sm font-medium">
+      <li>
+        <a routerLink="/customers"
+           routerLinkActive="text-sky-300"
+           class="hover:text-sky-300 transition-colors duration-300">
+          Customers
+        </a>
+      </li>
+      <li>
+        <a routerLink="/products"
+           routerLinkActive="text-sky-300"
+           class="hover:text-sky-300 transition-colors duration-300">
+          Products
+        </a>
+      </li>
+      <li>
+        <a routerLink="/orders"
+           routerLinkActive="text-sky-300"
+           class="hover:text-sky-300 transition-colors duration-300">
+          Orders
+        </a>
+      </li>
+    </ul>
 
+    <!-- Logout Button -->
+    <button
+      (click)="logout()"
+      class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-4 py-3 rounded-xl shadow-sm transition-all duration-300">
+      Logout
+    </button>
 
-  <button
-    (click)="logout()"
-    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-  >
-    Logout
-  </button>
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
+  </div>
 </nav>
