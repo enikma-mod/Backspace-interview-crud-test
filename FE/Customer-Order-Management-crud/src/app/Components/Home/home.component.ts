@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
     if (!this.selectedCustomer) return;
 
     // Navigate based on backend isAdmin field
-    if (this.selectedCustomer.isAdmin) {
+    if (this.selectedCustomer.admin) {
       this.router.navigate(['/admin'], { state: { user: this.selectedCustomer } });
     } else {
       this.router.navigate(['/customer', this.selectedCustomer.customerId], { state: { user: this.selectedCustomer } });

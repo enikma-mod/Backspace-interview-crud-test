@@ -52,7 +52,7 @@ export class CustomerDashboardComponent {
 
   editOrder(order: CustomerOrder) {
     this.editingOrder = order;
-    this.orderForm = { productId: order.product.productId, quantity: order.customerOrderQuantity };
+    this.orderForm = { productId: order.product?.productId, quantity: order.customerOrderQuantity };
     this.showAddForm = true;
   }
 

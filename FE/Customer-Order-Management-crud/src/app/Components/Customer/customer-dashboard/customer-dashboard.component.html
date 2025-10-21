@@ -17,7 +17,7 @@
     <tbody>
       <tr *ngFor="let order of orders">
         <td class="py-2 px-4">{{ order.orderReferenceNumber }}</td>
-        <td class="py-2 px-4">{{ order.product.productName }}</td>
+        <td class="py-2 px-4">{{ order.product?.productName }}</td>
         <td class="py-2 px-4">{{ order.customerOrderQuantity }}</td>
         <td class="py-2 px-4 space-x-2">
           <button (click)="editOrder(order)"

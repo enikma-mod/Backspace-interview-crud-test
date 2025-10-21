@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../../../services/customer.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Customer } from '../../../Models/customer.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -19,7 +19,7 @@ export class RegisterComponent {
     customerEmail: '',
     customerPhoneNumber: '',
     customerPassword: '',
-    isAdmin: false
+    admin: false
   };
   message = '';
   errorMessage = '';
@@ -28,9 +28,17 @@ export class RegisterComponent {
 
   register(): void {
     this.customerService.addCustomer(this.customer).subscribe({
-      next: () => {
+      next: (customer: Customer) => {
         this.message = 'Registration successful!';
-        setTimeout(() => this.router.navigate(['customer-dashboard']), 1500);
+        console.log("is admin:", customer?.admin);
+
+        if (customer?.admin) {
+          console.log("is it here 1")
+          this.router.navigate(['/admin-dashboard']);
+        } else {
+          console.log("is it here 2")
+          this.router.navigate(['/customer-dashboard']);
+        }
       },
       error: (err) => {
         console.error(err);
@@ -39,4 +47,7 @@ export class RegisterComponent {
     });
   }
 
+
 }
+
+

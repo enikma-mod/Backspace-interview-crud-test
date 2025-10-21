@@ -20,7 +20,7 @@ export class CustomerComponent implements OnInit {
     customerPhoneNumber: '',
     customerEmail: '',
     orders: [],
-    isAdmin: false
+    admin: true
   };
 
   displayForm = false;
@@ -34,7 +34,7 @@ export class CustomerComponent implements OnInit {
   }
 
   openForm() {
-    this.selectedCustomer = { customerName: '', customerSurname: '', customerPhoneNumber: '', customerEmail: '', isAdmin: false };
+    this.selectedCustomer = { customerName: '', customerSurname: '', customerPhoneNumber: '', customerEmail: '', admin: false };
     this.displayForm = true;
   }
 

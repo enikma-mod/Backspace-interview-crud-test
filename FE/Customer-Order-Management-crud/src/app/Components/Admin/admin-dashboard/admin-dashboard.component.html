@@ -1,0 +1,228 @@
+<div class="min-h-screen bg-sky-900 text-gray-800 p-6">
+
+<!----------------------------- Customers Section -------------------------------------->
+<div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
+  <h2 class="text-xl font-bold mb-4">Customers</h2>
+
+  <button (click)="toggleCustomerForm()" class="bg-sky-800 text-white p-2 rounded mb-4 hover:bg-sky-700">
+    {{ editingCustomer ? 'Cancel Edit' : (showCustomerForm ? 'Cancel' : 'Add Customer') }}
+  </button>
+
+  <!---------------- Add/Edit Customer Form ---------------------------------->
+  <div *ngIf="showCustomerForm" class="mt-4 p-4 border rounded-lg bg-gray-50">
+    <h3 class="text-lg font-semibold mb-2">{{ editingCustomer ? 'Edit Customer' : 'Add Customer' }}</h3>
+    <form (ngSubmit)="saveCustomer()">
+      <input
+        type="text"
+        placeholder="First Name"
+        [(ngModel)]="customerForm.customerName"
+        name="customerName"
+        required
+        class="p-2 border rounded w-full mb-2"
+      />
+
+      <input
+        type="text"
+        placeholder="Surname"
+        [(ngModel)]="customerForm.customerSurname"
+        name="customerSurname"
+        required
+        class="p-2 border rounded w-full mb-2"
+      />
+
+      <input
+        type="text"
+        placeholder="Email"
+        [(ngModel)]="customerForm.customerEmail"
+        name="customerEmail"
+        required
+        class="p-2 border rounded w-full mb-2"
+      />
+
+      <input
+        type="text"
+        placeholder="Phone Number"
+        [(ngModel)]="customerForm.customerPhoneNumber"
+        name="customerPhoneNumber"
+        required
+        pattern="[0-9]*"
+        class="p-2 border rounded w-full mb-2"
+      />
+
+      <label class="flex items-center mb-2">
+        <input type="checkbox" [(ngModel)]="customerForm.admin" name="admin" class="mr-2" />
+        Admin
+      </label>
+
+      <button type="submit" class="bg-sky-800 text-white p-2 rounded hover:bg-sky-700">
+        {{ editingCustomer ? 'Update' : 'Save' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- ===== Customer Table ===== -->
+  <table class="min-w-full border mt-4">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4">Name</th>
+        <th class="py-2 px-4">Surname</th>
+        <th class="py-2 px-4">Email</th>
+        <th class="py-2 px-4">Phone</th>
+        <th class="py-2 px-4">Admin</th>
+        <th class="py-2 px-4">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td class="py-2 px-4">{{ customer.customerName }}</td>
+        <td class="py-2 px-4">{{ customer.customerSurname }}</td>
+        <td class="py-2 px-4">{{ customer.customerEmail }}</td>
+        <td class="py-2 px-4">{{ customer.customerPhoneNumber }}</td>
+        <td class="py-2 px-4">{{ customer.admin ? 'Yes' : 'No' }}</td>
+        <td class="py-2 px-4 space-x-2">
+          <button (click)="editCustomer(customer)" class="bg-yellow-400 p-1 rounded hover:bg-yellow-500">
+            Edit
+          </button>
+          <button (click)="deleteCustomer(customer.customerId!)" class="bg-red-600 text-white p-1 rounded hover:bg-red-700">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+  <!-- ------------------------------- Products Section ------------------------------ -->
+<div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
+  <h2 class="text-xl font-bold mb-4">Products</h2>
+
+  <button (click)="toggleProductForm()" class="bg-sky-800 text-white p-2 rounded mb-4 hover:bg-sky-700">
+    {{ editingProduct ? 'Cancel Edit' : (showProductForm ? 'Cancel' : 'Add Product') }}
+  </button>
+
+  <!-- ===== Add/Edit Product Form ===== -->
+  <div *ngIf="showProductForm" class="mt-4 p-4 border rounded-lg bg-gray-50">
+    <h3 class="text-lg font-semibold mb-2">{{ editingProduct ? 'Edit Product' : 'Add Product' }}</h3>
+    <form (ngSubmit)="saveProduct()">
+      <input
+        type="text"
+        placeholder="Product Name"
+        [(ngModel)]="productForm.productName"
+        name="productName"
+        required
+        class="p-2 border rounded w-full mb-2"
+      />
+      <input
+        type="text"
+        placeholder="Description"
+        [(ngModel)]="productForm.productDesc"
+        name="productDesc"
+        required
+        class="p-2 border rounded w-full mb-2"
+      />
+    
+    <input
+        type="text"
+        inputmode="decimal"
+        placeholder="0.00"
+        [(ngModel)]="productForm.productPrice"
+        name="productPrice"
+        required
+        pattern="[0-9]*[.]?[0-9]*"
+        class="p-2 flex-1 outline-none"
+    />
+
+      <button type="submit" class="bg-sky-800 text-white p-2 rounded hover:bg-sky-700">
+        {{ editingProduct ? 'Update' : 'Save' }}
+      </button>
+    </form>
+  </div>
+
+
+  <!-- ===== Product Table ===== -->
+  <table class="min-w-full border mt-4">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4">Name</th>
+        <th class="py-2 px-4">Description</th>
+        <th class="py-2 px-4">Price</th>
+        <th class="py-2 px-4">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td class="py-2 px-4">{{ product.productName }}</td>
+        <td class="py-2 px-4">{{ product.productDesc }}</td>
+        <td class="py-2 px-4">{{ product.productPrice | currency }}</td>
+        <td class="py-2 px-4 space-x-2">
+          <button (click)="editProduct(product)" class="bg-yellow-400 p-1 rounded hover:bg-yellow-500">
+            Edit
+          </button>
+          <button (click)="deleteProduct(product.productId!)" class="bg-red-600 text-white p-1 rounded hover:bg-red-700">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- <div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
+    <h2 class="text-xl font-bold mb-4">Products</h2>
+    <button (click)="addProduct()" class="bg-sky-800 text-white p-2 rounded mb-4 hover:bg-sky-700">Add Product</button>
+    <table class="min-w-full border">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="py-2 px-4">Name</th>
+          <th class="py-2 px-4">Description</th>
+          <th class="py-2 px-4">Price</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td class="py-2 px-4">{{ product.productName }}</td>
+          <td class="py-2 px-4">{{ product.productDesc }}</td>
+          <td class="py-2 px-4">{{ product.productPrice }}</td>
+          <td class="py-2 px-4 space-x-2">
+            <button (click)="editProduct(product)" class="bg-yellow-400 p-1 rounded hover:bg-yellow-500">Edit</button>
+            <button (click)="deleteProduct(product.productId!)" class="bg-red-600 text-white p-1 rounded hover:bg-red-700">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+
+  <!-- ===== Orders Section ===== -->
+  <div class="bg-white p-6 rounded-2xl shadow-lg mb-6">
+    <h2 class="text-xl font-bold mb-4">Orders</h2>
+    <button class="bg-sky-800 text-white p-2 rounded mb-4 hover:bg-sky-700">Add Order</button>
+    <table class="min-w-full border">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="py-2 px-4">Order Ref</th>
+          <th class="py-2 px-4">Customer</th>
+          <th class="py-2 px-4">Product</th>
+          <th class="py-2 px-4">Quantity</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td class="py-2 px-4">{{ order.orderReferenceNumber }}</td>
+          <td class="py-2 px-4">{{ order.customer?.customerName }}</td>
+          <td class="py-2 px-4">{{ order.product?.productName }}</td>
+          <!-- <td class="py-2 px-4">{{ order.product }}</td> -->
+          <td class="py-2 px-4 space-x-2">
+            <!-- <button (click)="editOrder(order)" class="bg-yellow-400 p-1 rounded hover:bg-yellow-500">Edit</button> -->
+            <!-- <button (click)="deleteOrder(order!.customerOrderId)" class="bg-red-600 text-white p-1 rounded hover:bg-red-700">Delete</button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

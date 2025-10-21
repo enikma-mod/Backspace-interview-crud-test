@@ -12,7 +12,7 @@
       >
         <option [ngValue]="null" disabled selected>Choose a user</option>
         <option *ngFor="let customer of customers" [ngValue]="customer">
-          {{ customer.customerName }} <span *ngIf="customer.isAdmin">👑</span>
+          {{ customer.customerName }} <span *ngIf="customer?.admin">👑</span>
         </option>
       </select>
 
