@@ -53,12 +53,12 @@ public class CustomerController {
         return customerService.addCustomer(customer);
     }
 
-    @PutMapping("/{customerId}")
+    @PutMapping("update/{customerId}")
     public Customer updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody Customer customer) {
         return customerService.updateCustomer(customerId, customer);
     }
 
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping("delete/{customerId}")
     public String deleteCustomer(@PathVariable Long customerId) {
         customerService.deleteCustomer(customerId);
         return("Customer deleted successfully");

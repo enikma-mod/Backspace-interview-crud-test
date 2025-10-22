@@ -6,6 +6,9 @@ import { CustomerOrder } from '../../../Models/customer-order.model';
 import { OrdersService } from '../../../services/orders.service';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../Models/product.model';
+import { ToastService } from '../../../services/toast.service';
+import { Customer } from '../../../Models/customer.model';
+import { CustomerService } from '../../../services/customer.service';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -16,16 +19,44 @@ import { Product } from '../../../Models/product.model';
 })
 export class CustomerDashboardComponent {
   orders: CustomerOrder[] = [];
+  customers: Customer[] = [];
   products: Product[] = [];
   showAddForm = false;
-  editingOrder: CustomerOrder | null = null;
-  orderForm: any = { productId: null, quantity: 1 };
+  showOrderForm: boolean = false 
+  editingOrder: boolean = false;
 
-  constructor(private orderService: OrdersService, private productService: ProductService) {}
+  customerForm: Customer = {
+      customerName: '',
+      customerSurname: '',
+      customerEmail: '',
+      customerPhoneNumber: '',
+      customerPassword: '',
+      admin: false
+  };
+  
+  productForm: Product = {
+    productName: '',
+    productDesc: '',
+    productPrice: 0
+  };
+
+  orderForm: CustomerOrder = {
+    orderReferenceNumber: '',
+    customer: this.customerForm,
+    product: this.productForm,
+    customerOrderQuantity: 0
+  };
+
+  constructor(
+    private orderService: OrdersService, 
+    private productService: ProductService, 
+    private toaster: ToastService,
+    private customerService: CustomerService,) {}
 
   ngOnInit() {
     this.loadOrders();
     this.loadProducts();
+    this.loadCustomers();
   }
 
   loadOrders() {
@@ -37,23 +68,70 @@ export class CustomerDashboardComponent {
   }
 
   saveOrder() {
-    if (this.editingOrder) {
-      this.orderService.updateOrder(this.editingOrder.customerOrderId!, this.orderForm).subscribe(() => {
-        this.showAddForm = false;
-        this.loadOrders();
+    const payload = {
+      customerId: Number(this.orderForm.customer?.customerId),
+      productId: Number(this.orderForm.product?.productId),
+      customerOrderQuantity: Number(this.orderForm.customerOrderQuantity)
+    }
+
+    console.log('my playload ', payload);
+    if (this.editingOrder && this.orderForm.customerOrderId) {
+      this.orderService.updateOrder(this.orderForm.customerOrderId, this.orderForm).subscribe({
+        next: () => {
+          this.toaster.success("Order successfully Updated")
+          this.loadOrders()
+          this.toggleOrderForm();
+        },
+        error: (err) => console.error('Failed to update order', err),
       });
     } else {
-      this.orderService.addOrder(this.orderForm).subscribe(() => {
-        this.showAddForm = false;
-        this.loadOrders();
+      this.orderService.addOrder(payload).subscribe({
+        next: () => {
+          this.toaster.success("Order successfully Updated")
+          this.loadOrders()
+          this.toggleOrderForm();
+        },
+        error: (err) => {
+          console.error('Failed to add order', err)
+        }
       });
     }
   }
 
-  editOrder(order: CustomerOrder) {
-    this.editingOrder = order;
-    this.orderForm = { productId: order.product?.productId, quantity: order.customerOrderQuantity };
-    this.showAddForm = true;
+  toggleOrderForm(): void {
+    this.showOrderForm = !this.showOrderForm;
+    if (!this.showOrderForm) {
+      this.resetOrderForm();
+    }
+  }
+
+  loadCustomers(): void {
+    this.customerService.getAllCustomers().subscribe({
+      next: (data) => this.customers = data,
+      error: (err) => console.error('Failed to load customers', err)
+    });
+  }
+
+  filterCustomer(): void {
+    const id = this.orderForm.customer?.customerId;
+    if (!id) return;
+
+    this.customers = this.customers.filter(c => c.customerId === id);
+  }
+
+  resetOrderForm(): void {
+    this.orderForm = {
+      orderReferenceNumber: '',
+      customerOrderQuantity: 0
+    };
+    this.editingOrder = false;
+    this.showOrderForm = false;
+  }
+
+  editOrder(order: CustomerOrder): void {
+    this.showOrderForm = true;
+    this.editingOrder = true;
+    this.orderForm = { ...order };
   }
 
   deleteOrder(orderId: number) {

@@ -8,6 +8,7 @@ import { CustomerService } from '../../../services/customer.service';
 import { ProductService } from '../../../services/product.service';
 import { OrdersService } from '../../../services/orders.service';
 import { RouterModule } from '@angular/router';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -19,8 +20,8 @@ import { RouterModule } from '@angular/router';
 export class AdminDashboardComponent {
   customers: Customer[] = [];
   orders: CustomerOrder[] = [];
-
   products: Product[] = [];
+
   showProductForm: boolean = false;
   showCustomerForm: boolean = false;
   showOrderForm: boolean = false 
@@ -54,7 +55,8 @@ export class AdminDashboardComponent {
   constructor(
     private customerService: CustomerService,
     private productService: ProductService,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private toaster: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -85,7 +87,7 @@ export class AdminDashboardComponent {
     });
   }
 
-  // -------------------------------- CUSTOMER METHODS ------------------------------------------
+
   toggleCustomerForm(): void {
     this.showCustomerForm = !this.showCustomerForm;
     if (!this.showCustomerForm) {
@@ -99,16 +101,25 @@ export class AdminDashboardComponent {
         next: () => {
           this.loadCustomers();
           this.resetCustomerForm();
+          this.toaster.success("User successfully Updated")
         },
-        error: (err) => console.error('Failed to update product', err),
+        error: (err) => {
+          this.toaster.error("Failed to update customer details")
+          console.error('Failed to update product', err)
+        }
       });
     } else {
       this.customerService.addCustomer(this.customerForm).subscribe({
         next: () => {
           this.loadCustomers();
           this.resetCustomerForm();
+           this.toaster.success("User successfully added")
         },
-        error: (err) => console.error('Failed to add product', err),
+        error: (err) => {
+          this.toaster.error("Failed to add customer")
+          console.error('Failed to add product', err)
+        }
+         
       });
     }
   }
@@ -122,13 +133,13 @@ export class AdminDashboardComponent {
       customerPassword: '',
 
     };
-    this.editingProduct = false;
-    this.showProductForm = false;
+    this.editingCustomer = false;
+    this.showCustomerForm = false;
   }
 
   editCustomer(customer: Customer): void {
     this.showCustomerForm = true;
-    this.editingProduct = true;
+    this.editingCustomer = true;
     this.customerForm = { ...customer };
   }
 
@@ -200,31 +211,44 @@ export class AdminDashboardComponent {
   toggleOrderForm(): void {
     this.showOrderForm = !this.showOrderForm;
     if (!this.showOrderForm) {
-      this.resetProductForm();
+      this.resetOrderForm();
     }
   }
 
+
+
   saveOrder(): void {
-    if (this.editingOrder && this.orderForm?.customerOrderId!) {
-      this.orderService.updateOrder(this.orderForm?.customerOrderId, this.orderForm).subscribe({
+    const payload = {
+      customerId: Number(this.orderForm.customer?.customerId),
+      productId: Number(this.orderForm.product?.productId),
+      customerOrderQuantity: Number(this.orderForm.customerOrderQuantity)
+    }
+
+    console.log('my playload ', payload);
+    if (this.editingOrder && this.orderForm.customerOrderId) {
+      this.orderService.updateOrder(this.orderForm.customerOrderId, this.orderForm).subscribe({
         next: () => {
+          this.toaster.success("Order successfully Updated")
           this.loadOrders()
           this.toggleOrderForm();
         },
         error: (err) => console.error('Failed to update order', err),
       });
     } else {
-      this.orderService.addOrder(this.orderForm).subscribe({
+      this.orderService.addOrder(payload).subscribe({
         next: () => {
+          this.toaster.success("Order successfully Updated")
           this.loadOrders()
           this.toggleOrderForm();
         },
-        error: (err) => console.error('Failed to add order', err),
+        error: (err) => {
+          console.error('Failed to add order', err)
+        }
       });
     }
   }
 
-    resetOrderForm(): void {
+  resetOrderForm(): void {
     this.orderForm = {
       orderReferenceNumber: '',
       customerOrderQuantity: 0
@@ -233,38 +257,12 @@ export class AdminDashboardComponent {
     this.showOrderForm = false;
   }
 
-    editOrder(order: CustomerOrder): void {
+  editOrder(order: CustomerOrder): void {
     this.showOrderForm = true;
     this.editingOrder = true;
     this.orderForm = { ...order };
   }
 
-  
-
-
-  // ===== ORDER METHODS =====
-  // addOrder(): void {
-  //   const customerId = prompt('Enter Customer ID:');
-  //   const productId = prompt('Enter Product ID:');
-  //   const quantity = prompt('Enter Quantity:');
-
-  //   if (customerId && productId && quantity) {
-  //     this.orderService.addOrder(+customerId, +productId, +quantity).subscribe({
-  //       next: () => this.loadOrders(),
-  //       error: (err) => console.error('Failed to add order', err)
-  //     });
-  //   }
-  // }
-
-  // editOrder(order: CustomerOrder): void {
-  //   const productId = prompt('Enter new Product ID (or leave empty):', order.product?.productId?.toString() || '');
-  //   const quantity = prompt('Enter new Quantity (or leave empty):', order.customerOrderQuantity?.toString() || '');
-
-  //   this.orderService.updateOrder(order.customerOrderId!, productId ? +productId : undefined, quantity ? +quantity : undefined).subscribe({
-  //     next: () => this.loadOrders(),
-  //     error: (err) => console.error('Failed to update order', err)
-  //   });
-  // }
 
   deleteOrder(orderId: number): void {
     if (confirm('Are you sure you want to delete this order?')) {

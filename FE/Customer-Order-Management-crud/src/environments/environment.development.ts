@@ -10,8 +10,8 @@ export const environment = {
         customers_login: '/customers/login',
         customers_get_one: '/customers/',
         customers_add: '/customers',
-        customers_update: '/customers/',
-        customers_delete: '/customers/',
+        customers_update: '/customers/update/',
+        customers_delete: '/customers/delete/',
 
         // Order Endpoints
         orders_get_by_customer: '/orders/customer/',
