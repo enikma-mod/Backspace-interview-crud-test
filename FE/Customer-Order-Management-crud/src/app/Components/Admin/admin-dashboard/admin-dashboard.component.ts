@@ -167,6 +167,7 @@ export class AdminDashboardComponent {
         next: () => {
           this.loadProducts();
           this.resetProductForm();
+          this.toaster.success("Product successfully Updated")
         },
         error: (err) => console.error('Failed to update product', err),
       });
@@ -176,7 +177,10 @@ export class AdminDashboardComponent {
           this.loadProducts();
           this.resetProductForm();
         },
-        error: (err) => console.error('Failed to add product', err),
+        error: (err) => {
+          this.toaster.error("Failed to add product")
+          console.error('Failed to add product', err)
+        }
       });
     }
   }
@@ -272,5 +276,4 @@ export class AdminDashboardComponent {
       });
     }
   }
-
 }
