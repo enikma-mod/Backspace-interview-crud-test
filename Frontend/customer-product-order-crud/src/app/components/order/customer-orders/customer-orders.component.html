@@ -1,0 +1,56 @@
+<p-button label="Add Order" icon="pi pi-plus" (onClick)="addOrder()" class="p-mb-3"></p-button>
+
+<p-table [value]="orders" [paginator]="true" [rows]="5">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Order Ref</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-order>
+    <tr>
+      <td>{{ order.orderReferenceNumber }}</td>
+      <td>
+        {{ products.find(p => p.id === order.productId)?.name }}
+      </td>
+      <td>{{ order.quantity }}</td>
+      <td>
+        <p-button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (onClick)="editOrder(order)"></p-button>
+        <p-button icon="pi pi-trash" class="p-button-rounded p-button-danger" (onClick)="deleteOrder(order)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Order Form Dialog -->
+<p-dialog header="Customer Order" [(visible)]="displayForm" modal="true" [closable]="false" [style]="{width: '800px'}">
+  <form class="p-fluid" (ngSubmit)="saveOrder(selectedOrder)">
+    <div class="p-grid p-formgrid p-mb-3">
+      <div class="p-field p-col-6">
+        <label for="product">Product</label>
+        <p-dropdown 
+          [options]="products" 
+          optionLabel="name" 
+          [(ngModel)]="selectedOrder.productId" 
+          name="productId" 
+          [showClear]="true" 
+          placeholder="Select a product" 
+          style="width: 100%;">
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-6">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" pInputText [(ngModel)]="selectedOrder.quantity" name="quantity" style="width: 100%;" />
+      </div>
+    </div>
+
+    <div class="p-d-flex p-jc-end p-mt-3">
+      <p-button label="Save" icon="pi pi-check" class="p-mr-2" type="submit"></p-button>
+      <p-button label="Cancel" icon="pi pi-times" class="p-button-secondary" (onClick)="displayForm=false"></p-button>
+    </div>
+  </form>
+</p-dialog>

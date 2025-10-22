@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-sky-900 p-6">
+  <h2 class="text-2xl font-bold mb-4 text-white">My Orders</h2>
+
+  <button (click)="showAddForm = true"
+          class="mb-4 bg-sky-800 text-white p-2 rounded-lg hover:bg-sky-700">Add Order
+  </button>
+
+  <table class="min-w-full bg-white rounded-lg overflow-hidden">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4">Order Ref</th>
+        <th class="py-2 px-4">Product</th>
+        <th class="py-2 px-4">Quantity</th>
+        <th class="py-2 px-4">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td class="py-2 px-4">{{ order.orderReferenceNumber }}</td>
+        <td class="py-2 px-4">{{ order.product?.productName }}</td>
+        <td class="py-2 px-4">{{ order.customerOrderQuantity }}</td>
+        <td class="py-2 px-4 space-x-2">
+          <button (click)="editOrder(order)"
+                  class="bg-sky-400 p-1 rounded hover:bg-sky-500">Edit</button>
+          <button (click)="deleteOrder(order.customerOrderId!)"
+                  class="bg-sky-600 text-white p-1 rounded hover:bg-sky-700">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="showAddForm" class="mt-4 p-4 border rounded-lg bg-gray-50">
+    <h3 class="text-lg font-semibold mb-2">{{ editingOrder ? 'Edit Order' : 'Add Order' }}</h3>
+    <form (ngSubmit)="saveOrder()">
+
+        <select [(ngModel)]="orderForm.customer!.customerId" name="customerId"
+              class="w-full p-2 border rounded mb-2">
+        <option *ngFor="let customer of customers" [value]="customer.customerId">{{ customer.customerName }} {{ customer.customerSurname }}</option>
+      </select>
+
+      <select [(ngModel)]="orderForm.product!.productId!" name="productId"
+              class="w-full p-2 border rounded mb-2">
+        <option *ngFor="let product of products" [value]="product?.productId">{{ product.productName }}</option>
+      </select>
+      <input type="number" placeholder="Quantity" [(ngModel)]="orderForm.customerOrderQuantity" name="quantity"
+             class="w-full p-2 border rounded mb-2"/>
+      <button type="submit"
+              class="bg-sky-800 text-white p-2 rounded hover:bg-sky-700 w-full">{{ editingOrder ? 'Update' : 'Save' }}</button>
+    </form>
+  </div>
+</div>

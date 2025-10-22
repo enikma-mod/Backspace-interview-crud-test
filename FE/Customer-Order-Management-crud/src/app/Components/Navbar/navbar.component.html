@@ -1,0 +1,50 @@
+<nav class="bg-gradient-to-r from-sky-900 via-sky-800 to-sky-700 text-white shadow-lg">
+  <div class="flex justify-between items-center max-w-7xl mx-auto">
+    <!-- Logo / Brand -->
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 bg-white text-sky-900 font-extrabold rounded-lg flex items-center justify-center">B</div>
+      <span class="font-bold text-lg tracking-wide">Backspace Technologies</span>
+    </div>
+
+    <!-- Navigation Links -->
+    <!-- <ul class="hidden md:flex space-x-6 text-sm font-medium">
+      <li>
+        <a routerLink="/customers"
+           routerLinkActive="text-sky-300"
+           class="hover:text-sky-300 transition-colors duration-300">
+          Customers
+        </a>
+      </li>
+      <li>
+        <a routerLink="/products"
+           routerLinkActive="text-sky-300"
+           class="hover:text-sky-300 transition-colors duration-300">
+          Products
+        </a>
+      </li>
+      <li>
+        <a routerLink="/orders"
+           routerLinkActive="text-sky-300"
+           class="hover:text-sky-300 transition-colors duration-300">
+          Orders
+        </a>
+      </li>
+    </ul> -->
+
+    <!-- Logout Button -->
+    <button
+      (click)="logout()"
+      class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-4 py-3 rounded-xl shadow-sm transition-all duration-300">
+      Logout
+    </button>
+
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
+  </div>
+</nav>

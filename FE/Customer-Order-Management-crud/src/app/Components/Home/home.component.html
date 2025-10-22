@@ -1,0 +1,41 @@
+<div class="flex justify-center items-center min-h-screen bg-sky-950">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-96 text-center">
+
+    <!-- Only show the welcome text if users exist -->
+    <ng-container *ngIf="customers && customers.length > 0; else noUsers">
+      <h2 class="text-2xl font-extrabold mb-4 text-sky-900">Welcome</h2>
+      <p class="text-gray-600 mb-6">Select your name to continue:</p>
+
+      <select
+        [(ngModel)]="selectedCustomer"
+        class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+      >
+        <option [ngValue]="null" disabled selected>Choose a user</option>
+        <option *ngFor="let customer of customers" [ngValue]="customer">
+          {{ customer.customerName }} <span *ngIf="customer?.admin">👑</span>
+        </option>
+      </select>
+
+      <button
+        (click)="proceed()"
+        [disabled]="!selectedCustomer"
+        class="w-full p-3 bg-sky-800 text-white font-semibold rounded-lg hover:bg-sky-700 disabled:opacity-50 transition"
+      >
+        Continue
+      </button>
+    </ng-container>
+
+    <!-- If NO users exist -->
+    <ng-template #noUsers>
+      <h2 class="text-2xl font-extrabold mb-4 text-sky-900">Welcome</h2>
+      <p class="text-gray-600 mb-6">No users found. Please create an account to continue.</p>
+    </ng-template>
+
+    <button
+      (click)="createUserAccount()"
+      class="mt-4 w-full p-3 border border-sky-800 text-sky-800 font-medium rounded-lg hover:bg-sky-800 hover:text-white transition"
+    >
+      Create New Account
+    </button>
+  </div>
+</div>

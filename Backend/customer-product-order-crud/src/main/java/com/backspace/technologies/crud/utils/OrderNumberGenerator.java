@@ -11,6 +11,6 @@ public class OrderNumberGenerator {
         String datePart = LocalDate.now().toString().replace("-", "");
         //To be changed - Make it sequential
         int randomPart = new Random().nextInt(90000) + 1000;
-        return datePart + "-" + randomPart;
+        return "ORD-" + datePart + "-" + randomPart;
     }
 }

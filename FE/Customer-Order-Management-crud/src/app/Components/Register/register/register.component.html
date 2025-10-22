@@ -1,0 +1,79 @@
+<div class="flex justify-center items-center min-h-screen bg-sky-900">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-96 sm:w-[450px]">
+    <h2 class="text-2xl font-extrabold mb-6 text-sky-900 text-center">Register</h2>
+
+    <div *ngIf="errorMessage" class="text-red-600 mb-4 text-center">{{ errorMessage }}</div>
+    <div *ngIf="message" class="text-green-600 mb-4 text-center">{{ message }}</div>
+
+    <form #registerForm="ngForm" (ngSubmit)="register()" class="space-y-4">
+
+    <div>
+        <input type="text" [(ngModel)]="customer.customerName" name="name" placeholder="First Name"
+            required minlength="2"
+            #name="ngModel"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"/>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-red-600 text-sm mt-1">
+        First name is required and must be at least 2 characters.
+        </div>
+    </div>
+
+    <div>
+        <input type="text" [(ngModel)]="customer.customerSurname" name="surname" placeholder="Last Name"
+            required minlength="2"
+            #surname="ngModel"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"/>
+        <div *ngIf="surname.invalid && (surname.dirty || surname.touched)" class="text-red-600 text-sm mt-1">
+        Last name is required and must be at least 2 characters.
+        </div>
+    </div>
+
+
+    <div>
+        <input type="email" [(ngModel)]="customer.customerEmail" name="email" placeholder="Email"
+            required email
+            #email="ngModel"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"/>
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-600 text-sm mt-1">
+        Please enter a valid email.
+        </div>
+    </div>
+
+    <div>
+        <input type="text" [(ngModel)]="customer.customerPhoneNumber" name="phone" placeholder="Phone Number"
+            required pattern="^\+?[0-9]{7,15}$"
+            #phone="ngModel"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"/>
+        <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-red-600 text-sm mt-1">
+        Phone number is required and must be 7-15 digits (optional '+' allowed).
+        </div>
+    </div>
+
+    <div>
+        <input type="password" [(ngModel)]="customer.customerPassword" name="password" placeholder="Password"
+            required minlength="6"
+            #password="ngModel"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"/>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-red-600 text-sm mt-1">
+        Password is required and must be at least 6 characters.
+        </div>
+    </div>
+
+    <label class="inline-flex items-center mb-4">
+        <input type="checkbox" [(ngModel)]="customer.admin" name="admin" class="mr-2">
+        <span>Register as Admin</span>
+    </label>
+
+    <button type="submit"
+            [disabled]="registerForm.invalid"
+            class="w-full p-3 bg-sky-800 text-white font-semibold rounded-lg hover:bg-sky-700 disabled:opacity-50">
+        Register
+    </button>
+    </form>
+
+
+    <p class="text-center text-gray-600 mt-4">
+      Already have an account?
+      <a routerLink="/login" class="text-sky-700 font-semibold hover:underline">Login</a>
+    </p>
+  </div>
+</div>
